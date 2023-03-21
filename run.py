@@ -6,16 +6,18 @@ hidden_size = 4 # taille de la couche cachée
 output_size = 1 # taille de la couche de sortie
 neural_network = NeuralNetwork(input_size, hidden_size, output_size)
 
+input_lenght = 100 # Nombre d'inputs a rentrer
+i_val = 80  # indice de la séparation entre les données d'entrainement et de validation
 
 """
 Préparez vos données d'entraînement. Dans cet exemple, nous allons utiliser des données générées aléatoirement. 
 Vous pouvez utiliser vos propres données en les chargeant depuis un fichier ou en les générant de manière programmée. 
 Nous allons également diviser les données en ensembles d'entraînement et de validation :
 """
-X = np.random.randn(100, input_size) # données d'entrée
-y = np.random.randint(0, 2, size=(100, output_size)) # valeurs cibles
-X_train, X_val = X[:80], X[80:] # données d'entraînement et de validation
-y_train, y_val = y[:80], y[80:] # valeurs cibles d'entraînement et de validation
+X = np.random.randn(input_lenght, input_size) # données d'entrée
+y = np.random.randint(0, 2, size=(input_lenght, output_size)) # valeurs cibles
+X_train, X_val = X[:i_val], X[i_val:] # données d'entraînement et de validation
+y_train, y_val = y[:i_val], y[i_val:] # valeurs cibles d'entraînement et de validation
 
 
 """
