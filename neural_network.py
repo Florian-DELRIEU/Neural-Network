@@ -83,3 +83,8 @@ class NeuralNetwork:
         else:                   plt.figure(fig_name)
         plt.plot(values,i,"kx")
         print(self.output)
+
+    def input(self,X):
+        assert type(X) is int
+        np.array([X])
+        self.predict(X)
