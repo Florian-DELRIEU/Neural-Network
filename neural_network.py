@@ -2,7 +2,7 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-DEBUG_ON = False
+DEBUG_ON = True
 PLOTTING_ON = True
 
 class NeuralNetwork:
@@ -20,7 +20,7 @@ class NeuralNetwork:
         Returns:
             - numpy.ndarray: La sortie de la transformation sigmoid appliquée à chaque élément de x.
         """
-        fonction_to_use = "tanh"
+        fonction_to_use = "sigmoid"
         if fonction_to_use == "tanh": return np.tanh(x)
         if fonction_to_use == "sigmoid": return 1/(1 + np.exp(-x))
 
