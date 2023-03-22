@@ -2,8 +2,8 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-DEBUG_ON = True
-PLOTTING_ON = True
+DEBUG_ON = False
+PLOTTING_ON = False
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -12,7 +12,7 @@ class NeuralNetwork:
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
 
-    def function(self, x):
+    def function(self, x, fonction_to_use="linear"):
         """
         Calcule la fonction d'activation sigmoid sur une entrée x.
             - x (numpy.ndarray): Un scalaire, un vecteur ou une matrice d'entrée.
@@ -20,7 +20,7 @@ class NeuralNetwork:
         Returns:
             - numpy.ndarray: La sortie de la transformation sigmoid appliquée à chaque élément de x.
         """
-        fonction_to_use = "sigmoid"
+        if fonction_to_use == "linear": return x
         if fonction_to_use == "tanh": return np.tanh(x)
         if fonction_to_use == "sigmoid": return 1/(1 + np.exp(-x))
 
@@ -34,8 +34,8 @@ class NeuralNetwork:
         Returns:
             numpy.ndarray: La sortie du réseau de neurones.
         """
-        self.hidden = self.function(np.dot(X, self.weights1) + self.bias1)  # activation de la couche cachée
-        self.output = self.function(np.dot(self.hidden, self.weights2) + self.bias2)  # activation de la couche de sortie
+        self.hidden = self.function(X*self.weights1 + self.bias1)  # activation de la couche cachée
+        self.output = self.function(self.hidden*self.weights2 + self.bias2)  # activation de la couche de sortie
 
     def backward(self, X, y, learning_rate):
         """
@@ -46,8 +46,8 @@ class NeuralNetwork:
             learning_rate (float): Le taux d'apprentissage du réseau de neurones.
         """
         # rétropropagation du gradient
-        d_output = (y - self.output)*self.output*(1 - self.output)
-        d_hidden = np.dot(d_output, self.weights2.T)*self.hidden*(1 - self.hidden)
+        d_output = (y - self.output)/y
+        d_hidden = d_output*self.weights2.T/self.hidden
 
         # mise à jour des poids et des biais
         self.weights2 += learning_rate*np.dot(self.hidden.T, d_output)
@@ -70,16 +70,17 @@ class NeuralNetwork:
             self.forward(X)
             self.backward(X, y, learning_rate)
             if PLOTTING_ON:
-                self.plot_output(self.output,"Output")
-                self.plot_output(self.weights1,"Weigths 1")
-                self.plot_output(self.weights2,"Weigths 2")
+                self.plot_output(i,self.output,"Output")
+                self.plot_output(i,self.weights1,"Weigths")
+                self.plot_output(i,self.weights2,"Weigths")
 
 
     def predict(self, X):
         self.forward(X)
-        return self.output.argmax(axis=1)
+        return self.output
 
-    def plot_output(self,values,fig_name=None):
-        if fig_name == None:    plt.figure()
+    def plot_output(self,values,i,fig_name=None):
+        if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
-        plt.plot(values,"kx")
+        plt.plot(values,i,"kx")
+        print(self.output)

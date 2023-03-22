@@ -20,22 +20,23 @@ Entraînez le système neuronal en appelant la méthode train de l'instance de N
 """
 
 learning_rate = 0.01 # taux d'apprentissage
-epochs = 10 # nombre d'itérations d'entraînement
+epochs = 100 # nombre d'itérations d'entraînement
 Network.train(X, y, learning_rate, epochs)
 
 """
 Évaluez la performance du système neuronal en appelant la méthode predict de l'instance de NeuralNetwork
 sur l'ensemble de validation :
 """
-X_val = np.array([10])
-y_val = np.array([20])
-y_pred = Network.predict(X_val)
+X_val = np.array([0.4])
+y_val = np.array([0.8])
 
 """
 Analysez les résultats de l'évaluation. Dans cet exemple, nous allons calculer le score de précision 
 pour voir à quelle fréquence le système neuronal prédit correctement les valeurs cibles :
 """
 
-accuracy = np.mean(y_pred == y_val.argmax(axis=1))
-print("Accuracy:", accuracy)
+#accuracy = np.mean(y_pred == y_val.argmax(axis=1))
+#print("Accuracy:", accuracy)
 print("Output", Network.output)
+
+y_pred = Network.predict(X_val)
