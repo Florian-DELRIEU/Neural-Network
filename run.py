@@ -4,7 +4,7 @@ import numpy as np
 input_size = 1 # taille de la couche d'entrée
 hidden_size = 2 # taille de la couche cachée
 output_size = 1 # taille de la couche de sortie
-neural_network = NeuralNetwork(input_size, hidden_size, output_size)
+Network = NeuralNetwork(input_size, hidden_size, output_size)
 
 
 """
@@ -24,14 +24,14 @@ Entraînez le système neuronal en appelant la méthode train de l'instance de N
 
 learning_rate = 0.1 # taux d'apprentissage
 epochs = 10 # nombre d'itérations d'entraînement
-neural_network.train(X_train, y_train, learning_rate, epochs)
+Network.train(X_train, y_train, learning_rate, epochs)
 
 """
 Évaluez la performance du système neuronal en appelant la méthode predict de l'instance de NeuralNetwork
 sur l'ensemble de validation :
 """
 
-y_pred = neural_network.predict(X_val)
+y_pred = Network.predict(X_val)
 
 """
 Analysez les résultats de l'évaluation. Dans cet exemple, nous allons calculer le score de précision 
@@ -40,4 +40,4 @@ pour voir à quelle fréquence le système neuronal prédit correctement les val
 
 accuracy = np.mean(y_pred == y_val.argmax(axis=1))
 print("Accuracy:", accuracy)
-print("Output", neural_network.output)
+print("Output", Network.output)

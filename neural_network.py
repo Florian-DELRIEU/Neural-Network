@@ -1,5 +1,9 @@
 import numpy as np
+import time
+import matplotlib.pyplot as plt
+
 DEBUG_ON = False
+PLOTTING_ON = True
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -65,7 +69,17 @@ class NeuralNetwork:
             if DEBUG_ON: print(f"Training... epoch {i}")
             self.forward(X)
             self.backward(X, y, learning_rate)
+            if PLOTTING_ON:
+                self.plot_output(self.output,"Output")
+                self.plot_output(self.weights1,"Weigths 1")
+                self.plot_output(self.weights2,"Weigths 2")
+
 
     def predict(self, X):
         self.forward(X)
         return self.output.argmax(axis=1)
+
+    def plot_output(self,values,fig_name=None):
+        if fig_name == None:    plt.figure()
+        else:                   plt.figure(fig_name)
+        plt.plot(values,"kx")
