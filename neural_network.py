@@ -1,5 +1,5 @@
 import numpy as np
-
+DEBUG_ON = False
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -8,7 +8,7 @@ class NeuralNetwork:
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
 
-    def sigmoid(self, x):
+    def function(self, x):
         """
         Calcule la fonction d'activation sigmoid sur une entrée x.
             - x (numpy.ndarray): Un scalaire, un vecteur ou une matrice d'entrée.
@@ -16,7 +16,9 @@ class NeuralNetwork:
         Returns:
             - numpy.ndarray: La sortie de la transformation sigmoid appliquée à chaque élément de x.
         """
-        return 1/(1 + np.exp(-x))
+        fonction_to_use = "tanh"
+        if fonction_to_use == "tanh": return np.tanh(x)
+        if fonction_to_use == "sigmoid": return 1/(1 + np.exp(-x))
 
     def forward(self, X):
         """
@@ -28,8 +30,8 @@ class NeuralNetwork:
         Returns:
             numpy.ndarray: La sortie du réseau de neurones.
         """
-        self.hidden = self.sigmoid(np.dot(X, self.weights1) + self.bias1)  # activation de la couche cachée
-        self.output = self.sigmoid(np.dot(self.hidden, self.weights2) + self.bias2)  # activation de la couche de sortie
+        self.hidden = self.function(np.dot(X, self.weights1) + self.bias1)  # activation de la couche cachée
+        self.output = self.function(np.dot(self.hidden, self.weights2) + self.bias2)  # activation de la couche de sortie
 
     def backward(self, X, y, learning_rate):
         """
@@ -60,6 +62,7 @@ class NeuralNetwork:
             epochs (int): Nombre d'itérations d'entraînement à effectuer.
         """
         for i in range(epochs):
+            if DEBUG_ON: print(f"Training... epoch {i}")
             self.forward(X)
             self.backward(X, y, learning_rate)
 

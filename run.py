@@ -12,8 +12,8 @@ Préparez vos données d'entraînement. Dans cet exemple, nous allons utiliser d
 Vous pouvez utiliser vos propres données en les chargeant depuis un fichier ou en les générant de manière programmée. 
 Nous allons également diviser les données en ensembles d'entraînement et de validation :
 """
-X = np.array([1,2,3,4,5]).reshape(5,1) #np.random.randn(100, input_size) # données d'entrée
-y = 2*X #np.random.randint(0, 2, size=(100, output_size)) # valeurs cibles
+X = np.array([1,2,3,4,5]).reshape(5,1) # données d'entrée
+y = 2*X # valeurs cibles
 X_train, X_val = X, X[::-1] # données d'entraînement et de validation
 y_train, y_val = y, y[::-1] # valeurs cibles d'entraînement et de validation
 
@@ -40,3 +40,4 @@ pour voir à quelle fréquence le système neuronal prédit correctement les val
 
 accuracy = np.mean(y_pred == y_val.argmax(axis=1))
 print("Accuracy:", accuracy)
+print("Output", neural_network.output)
