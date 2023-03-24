@@ -74,19 +74,20 @@ class NeuralNetwork:
             self.forward(X)
             self.backward(X, y, learning_rate)
             if PLOTTING_ON:
-                self.plot_output(self.output,"Output")
-                self.plot_output(self.weights1,"Weigths")
-                self.plot_output(self.weights2,"Weigths2")
+                self.plot_output(i,self.output,"Output")
+                self.plot_output(i,self.weights1,"Weigths")
+                self.plot_output(i,self.weights2,"Weigths2")
 
 
     def predict(self, X):
         self.forward(X)
         return self.output
 
-    def plot_output(self,values,fig_name=None):
+    def plot_output(self,epoch,values,fig_name=None):
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
-        plt.plot(values,"kx")
+        epoch_arr = epoch*np.ones(np.array(values.shape))
+        plt.plot(epoch_arr,values,"kx")
         print(self.output)
 
     def input(self,X):
