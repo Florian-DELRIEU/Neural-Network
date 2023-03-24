@@ -76,7 +76,7 @@ class NeuralNetwork:
             if PLOTTING_ON:
                 self.plot_output(self.output,"Output")
                 self.plot_output(self.weights1,"Weigths")
-                self.plot_output(self.weights2,"Weigths")
+                self.plot_output(self.weights2,"Weigths2")
 
 
     def predict(self, X):
