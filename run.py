@@ -24,7 +24,10 @@ y = np.where(X < -0.3, -1, np.where(X > 0.3, 1, 0))
 """
 Entraînez le système neuronal en appelant la méthode train de l'instance de NeuralNetwork :
 """
-learning_rate = 0.01 # taux d'apprentissage
-epochs = 40 # nombre d'itérations d'entraînement
+learning_rate = 0.1 # taux d'apprentissage
+epochs = 1000 # nombre d'itérations d'entraînement
 Network.train(X, y, learning_rate, epochs)
 
+
+print(f"Valeurs cibles: {y}")
+print(f"Valeurs obtenues: {Network.output}")

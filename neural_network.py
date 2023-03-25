@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-DEBUG_ON = True
-PLOTTING_ON = True
+DEBUG_ON = False
+PLOTTING_ON = False
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -11,7 +11,7 @@ class NeuralNetwork:
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
 
-    def function(self, x, fonction_to_use="sigmoid"):
+    def function(self, x, fonction_to_use="tanh"):
         """
         Calcule la fonction d'activation sigmoid sur une entrée x.
             - x (numpy.ndarray): Un scalaire, un vecteur ou une matrice d'entrée.
@@ -49,8 +49,9 @@ class NeuralNetwork:
         d_hidden = np.dot(d_output, self.weights2.T)*self.hidden*(1 - self.hidden)
 
         # mise à jour des poids et des biais
-        self.weights2 += learning_rate*np.dot(self.hidden.T,d_output) #fixme
-        self.weights1 += learning_rate*np.dot(X.T,d_hidden) #fixme
+        # TOSEE Les poids évoluent de la même manière et restent égaux
+        self.weights2 += learning_rate*np.dot(self.hidden.T,d_output)
+        self.weights1 += learning_rate*np.dot(X.T,d_hidden)
         self.bias2 += learning_rate*np.sum(d_output, axis=0)
         self.bias1 += learning_rate*np.sum(d_hidden, axis=0)
 
@@ -77,6 +78,7 @@ class NeuralNetwork:
                 self.plot_output(i,self.output,"Output")
                 self.plot_output(i,self.weights1,"Weigths")
                 self.plot_output(i,self.weights2,"Weigths2")
+            if DEBUG_ON: print(self.output)
 
 
     def predict(self, X):
@@ -88,7 +90,7 @@ class NeuralNetwork:
         else:                   plt.figure(fig_name)
         epoch_arr = epoch*np.ones(np.array(values.shape))
         plt.plot(epoch_arr,values,"kx")
-        print(self.output)
+
 
     def input(self,X):
         assert type(X) is int
