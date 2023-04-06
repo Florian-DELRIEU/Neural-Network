@@ -1,21 +1,8 @@
-"""
-Premier essai de réseaux de neurones
-"""
+"""Code inspiré du réseau généré par GPT"""
 import numpy as np
 
-class InitialLayer:
-    def __init__(self,N):
-        self.input = None
-        self.output = None
 
-    def FeedForward(self,Input):
-        """
-        :Input: liste de taille N (autant d'entrée que de neurones)
-        """
-        self.input = Input
-        self.output = self.input
-
-class Layer:
-    def __init__(self,N):
-        self.input = None
-        self.output = None
+class NeuralNetwork:
+    def __init__(self,input_size,layer1_size,layer2_size):
+        self.weight1 = np.ones((input_size,layer1_size))
+        self.weight2 = np.ones((layer1_size,layer2_size))
