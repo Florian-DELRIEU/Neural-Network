@@ -29,5 +29,5 @@ epochs = 1000 # nombre d'itérations d'entraînement
 Network.train(X, y, learning_rate, epochs)
 
 
-print(f"Valeurs cibles: {y}")
-print(f"Valeurs obtenues: {Network.output}")
+print(f"Valeurs cibles: \n {y}")
+print(f"Valeurs obtenues: \n {Network.output}")
