@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 DEBUG_ON = False
-PLOTTING_ON = False
+PLOTTING_ON = True
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -50,7 +50,7 @@ class NeuralNetwork:
 
         # mise à jour des poids et des biais
         # TOSEE Les poids évoluent de la même manière et restent égaux
-        self.weights2 += learning_rate*np.dot(self.hidden.T,d_output)
+        self.weights2 += learning_rate*np.dot(self.hidden.T,d_output) # FIXME pb dans la fonction np.dot
         self.weights1 += learning_rate*np.dot(X.T,d_hidden)
         self.bias2 += learning_rate*np.sum(d_output, axis=0)
         self.bias1 += learning_rate*np.sum(d_hidden, axis=0)
