@@ -12,6 +12,13 @@ class NeuralNetwork:
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
 
+        self.list_weights1 = []
+        self.list_weights2 = []
+        self.list_bias1 = []
+        self.list_bias2 = []
+        self.list_hidden = []
+        self.list_output = []
+
     def function(self, x, fonction_to_use="tanh"):
         """
         Calcule la fonction d'activation sigmoid sur une entrée x.
@@ -37,6 +44,11 @@ class NeuralNetwork:
         self.hidden = self.function(np.dot(X,self.weights1) + self.bias1)  # activation de la couche cachée
         self.output = self.function(np.dot(self.hidden,self.weights2) + self.bias2)  # activation de la couche de sortie
 
+        # Sauvegarde des données ?
+        if PLOTTING_ON:
+            self.list_hidden.append(self.hidden)
+            self.list_output.append(self.output)
+
     def backward(self, X, y, learning_rate):
         """
         Calcule la rétropropagation du gradient et met à jour les poids et les biais du réseau de neurones.
@@ -55,6 +67,13 @@ class NeuralNetwork:
         self.weights1 += learning_rate*np.dot(X.T,d_hidden)
         self.bias2 += learning_rate*np.sum(d_output, axis=0)
         self.bias1 += learning_rate*np.sum(d_hidden, axis=0)
+
+        # Sauvegarde des données ?
+        if PLOTTING_ON:
+            self.list_weights1.append(self.weights1)
+            self.list_weights2.append(self.weights2)
+            self.list_bias1.append(self.bias1)
+            self.list_bias2.append(self.bias2)
 
     def train(self, X, y, learning_rate, epochs):
         """
