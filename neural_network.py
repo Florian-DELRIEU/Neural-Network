@@ -62,8 +62,7 @@ class NeuralNetwork:
         d_hidden = np.dot(d_output, self.weights2.T)*self.hidden*(1 - self.hidden)
 
         # mise à jour des poids et des biais
-        # TOSEE Les poids évoluent de la même manière et restent égaux
-        self.weights2 += learning_rate*np.dot(self.hidden.T,d_output) # FIXME pb dans la fonction np.dot
+        self.weights2 += learning_rate*np.dot(self.hidden.T,d_output)
         self.weights1 += learning_rate*np.dot(X.T,d_hidden)
         self.bias2 += learning_rate*np.sum(d_output, axis=0)
         self.bias1 += learning_rate*np.sum(d_hidden, axis=0)
@@ -84,11 +83,6 @@ class NeuralNetwork:
             y (ndarray): Valeurs cibles correspondant à chaque observation dans `X`.
             learning_rate (float): Taux d'apprentissage utilisé pour mettre à jour les poids du réseau.
             epochs (int): Nombre d'itérations d'entraînement à effectuer.
-        FIXME
-            - Apparition de nan values a partir du premier loop.
-            - Une de ces raison etait la multiplication par 0 qui survennait lors du calcul de l'erreur
-            - Peut être est ce encore les poids ?
-            - J'ai mis des tags
         """
         if DEBUG_ON: print("Training ...")
         for i in range(epochs):
@@ -96,9 +90,9 @@ class NeuralNetwork:
             self.backward(X, y, learning_rate)
             if DEBUG_ON: util.progress_print(i,epochs,int(epochs/10))
             if PLOTTING_ON:
-                self.plot_output(i,self.output,"Output")
-                self.plot_output(i,self.weights1,"Weigths")
-                self.plot_output(i,self.weights2,"Weigths2")
+                self.plot_output(i,self.output,"Output") #FIXME L'affichage des valeurs prends bcp de temps car a chaque itération
+                self.plot_output(i,self.weights1,"Weigths") #FIXME
+                self.plot_output(i,self.weights2,"Weigths2") #FIXME
 #            if DEBUG_ON: print(self.output)
         print("Trainig done")
 
@@ -108,6 +102,11 @@ class NeuralNetwork:
         return self.output
 
     def plot_output(self,epoch,values,fig_name=None):
+        """
+        TODO
+            Modifier la fonction afin de plot les valeurs meme lorsqu'elles sont dans des arrays de dimensions variés
+                - voir weights1, weights2 ...
+        """
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
         epoch_arr = epoch*np.ones(np.array(values.shape))
