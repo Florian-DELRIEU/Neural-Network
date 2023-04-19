@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import MyPack2.Utilities as util
 
 DEBUG_ON = False
 PLOTTING_ON = True
@@ -70,8 +71,9 @@ class NeuralNetwork:
             - Peut être est ce encore les poids ?
             - J'ai mis des tags
         """
+        if DEBUG_ON: print("Training ...")
         for i in range(epochs):
-            if DEBUG_ON: print(f"Training... epoch {i}")
+            if DEBUG_ON: util.progress_print(i,epochs,int(epochs/100))
             self.forward(X)
             self.backward(X, y, learning_rate)
             if PLOTTING_ON:
