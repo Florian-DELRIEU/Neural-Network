@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import MyPack2.Utilities as util
 
-DEBUG_ON = False
-PLOTTING_ON = True
+DEBUG_ON = True
+PLOTTING_ON = False
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -92,14 +92,15 @@ class NeuralNetwork:
         """
         if DEBUG_ON: print("Training ...")
         for i in range(epochs):
-            if DEBUG_ON: util.progress_print(i,epochs,int(epochs/100))
             self.forward(X)
             self.backward(X, y, learning_rate)
+            if DEBUG_ON: util.progress_print(i,epochs,int(epochs/10))
             if PLOTTING_ON:
                 self.plot_output(i,self.output,"Output")
                 self.plot_output(i,self.weights1,"Weigths")
                 self.plot_output(i,self.weights2,"Weigths2")
-            if DEBUG_ON: print(self.output)
+#            if DEBUG_ON: print(self.output)
+        print("Trainig done")
 
 
     def predict(self, X):
