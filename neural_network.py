@@ -4,7 +4,7 @@ import MyPack2.Utilities as util
 
 # Parametres Utilisateur
 DEBUG = True        # Affiche des logs ?
-PLOTTING = False    # Trace dans graphique
+PLOTTING = True    # Trace dans graphique
 SAVING = True       # Sauvegarde data
 
 # Parametres machine
@@ -52,8 +52,8 @@ class NeuralNetwork:
 
         # Sauvegarde des données ?
         if is_saving_data:
-            self.list_hidden.append(self.hidden)
-            self.list_output.append(self.output)
+            self.list_hidden.append(self.hidden.copy())
+            self.list_output.append(self.output.copy())
 
     def backward(self, X, y, learning_rate):
         """
@@ -75,10 +75,10 @@ class NeuralNetwork:
 
         # Sauvegarde des données ?
         if is_saving_data:
-            self.list_weights1.append(self.weights1)
-            self.list_weights2.append(self.weights2)
-            self.list_bias1.append(self.bias1)
-            self.list_bias2.append(self.bias2)
+            self.list_weights1.append(self.weights1.copy())
+            self.list_weights2.append(self.weights2.copy())
+            self.list_bias1.append(self.bias1.copy())
+            self.list_bias2.append(self.bias2.copy())
 
     def train(self, X, y, learning_rate, epochs):
         """
