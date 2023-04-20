@@ -30,7 +30,6 @@ class NeuralNetwork:
         self.list_bias2 = []
         self.list_hidden = []
         self.list_output = []
-        self.arr_epochs = np.array([])
 
     def function(self, x, fonction_to_use="tanh"):
         """
@@ -103,9 +102,9 @@ class NeuralNetwork:
             self.backward(X, y, learning_rate)
             if DEBUG: util.progress_print(i, epochs, int(epochs/10))
             if PLOTTING:
-                self.plot_output(i,self.output,"Output") #FIXME L'affichage des valeurs prends bcp de temps car a chaque itération
-                self.plot_output(i,self.weights1,"Weigths") #FIXME
-                self.plot_output(i,self.weights2,"Weigths2") #FIXME
+                self.plot_output(self.output,"Output") #FIXME L'affichage des valeurs prends bcp de temps car a chaque itération
+                self.plot_output(self.weights1,"Weigths") #FIXME
+                self.plot_output(self.weights2,"Weigths2") #FIXME
 #            if DEBUG_ON: print(self.output)
         print("Trainig done")
 
@@ -120,9 +119,14 @@ class NeuralNetwork:
             Modifier la fonction afin de plot les valeurs meme lorsqu'elles sont dans des arrays de dimensions variés
                 - voir weights1, weights2 ...
         """
+        values = np.array(values)
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
-
+        # Recupere le shape de values
+        temp_epochs, temp_m, temp_n = values.shape[0], values.shape[1], values.shape[2] #fixme certaines values sont d'ordre 2 et non 3
+        for _m in temp_m:
+            for _n in temp_n:
+                plt.plot(values[:,_m,_n],"-")
 
     def input(self,X):
         assert type(X) is int
