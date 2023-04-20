@@ -11,11 +11,18 @@ SAVING = True       # Sauvegarde data
 is_saving_data = PLOTTING or SAVING
 
 class NeuralNetwork:
+    """
+    TODO
+        - Pouvoir sauvegarder une partie des données (1/100 par ex.)
+            - il faut une nouvelle fonction avec en argument les variables a sauvegarder
+    """
     def __init__(self, input_size, hidden_size, output_size):
         self.weights1 = np.ones((input_size,hidden_size))  # poids de la couche d'entrée
         self.weights2 = np.ones((hidden_size, output_size))  # poids de la couche cachée
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
+        self.hidden = np.array([])
+        self.output = np.array([])
 
         self.list_weights1 = []
         self.list_weights2 = []
@@ -107,7 +114,7 @@ class NeuralNetwork:
         self.forward(X)
         return self.output
 
-    def plot_output(self,epoch,values,fig_name=None):
+    def plot_output(self,values,fig_name=None):
         """
         TODO
             Modifier la fonction afin de plot les valeurs meme lorsqu'elles sont dans des arrays de dimensions variés
@@ -115,8 +122,6 @@ class NeuralNetwork:
         """
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
-        epoch_arr = epoch*np.ones(np.array(values.shape))
-        plt.plot(epoch_arr,values,"kx")
 
 
     def input(self,X):
