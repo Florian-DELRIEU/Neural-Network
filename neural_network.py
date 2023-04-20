@@ -2,8 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import MyPack2.Utilities as util
 
-DEBUG_ON = True
-PLOTTING_ON = False
+# Parametres Utilisateur
+DEBUG = True        # Affiche des logs ?
+PLOTTING = False    # Trace dans graphique
+SAVING = True       # Sauvegarde data
+
+# Parametres machine
+is_saving_data = PLOTTING or SAVING
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
@@ -18,6 +23,7 @@ class NeuralNetwork:
         self.list_bias2 = []
         self.list_hidden = []
         self.list_output = []
+        self.arr_epochs = np.array([])
 
     def function(self, x, fonction_to_use="tanh"):
         """
@@ -45,7 +51,7 @@ class NeuralNetwork:
         self.output = self.function(np.dot(self.hidden,self.weights2) + self.bias2)  # activation de la couche de sortie
 
         # Sauvegarde des données ?
-        if PLOTTING_ON:
+        if is_saving_data:
             self.list_hidden.append(self.hidden)
             self.list_output.append(self.output)
 
@@ -68,7 +74,7 @@ class NeuralNetwork:
         self.bias1 += learning_rate*np.sum(d_hidden, axis=0)
 
         # Sauvegarde des données ?
-        if PLOTTING_ON:
+        if is_saving_data:
             self.list_weights1.append(self.weights1)
             self.list_weights2.append(self.weights2)
             self.list_bias1.append(self.bias1)
@@ -84,12 +90,12 @@ class NeuralNetwork:
             learning_rate (float): Taux d'apprentissage utilisé pour mettre à jour les poids du réseau.
             epochs (int): Nombre d'itérations d'entraînement à effectuer.
         """
-        if DEBUG_ON: print("Training ...")
+        if DEBUG: print("Training ...")
         for i in range(epochs):
             self.forward(X)
             self.backward(X, y, learning_rate)
-            if DEBUG_ON: util.progress_print(i,epochs,int(epochs/10))
-            if PLOTTING_ON:
+            if DEBUG: util.progress_print(i, epochs, int(epochs/10))
+            if PLOTTING:
                 self.plot_output(i,self.output,"Output") #FIXME L'affichage des valeurs prends bcp de temps car a chaque itération
                 self.plot_output(i,self.weights1,"Weigths") #FIXME
                 self.plot_output(i,self.weights2,"Weigths2") #FIXME
