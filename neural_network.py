@@ -114,25 +114,20 @@ class NeuralNetwork:
         return self.output
 
     def plot_output(self,values,fig_name=None):
-        """
-        TODO
-            Modifier la fonction afin de plot les valeurs meme lorsqu'elles sont dans des arrays de dimensions variés
-                - voir weights1, weights2 ...
-
-        FIXME
-            - Marche pour :output: mais pas pour :weights:
-            - reorder_values(weights).shape = (1,3,20)
-            - 60 elements impossible a reshape en 20 elements (taille de epochs)
-            + Mettre breakpoint l.133 (condition: fig_names == Weigths)
-        """
         values = np.array(values)
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
         # Recupere le shape de values
         reordered_values = util.reorder_array(values)
-        for i in range(reordered_values.shape[0]):  # Pour chaque éléments
-            epochs = reordered_values.shape[-1]
-            plt.plot(reordered_values[i].reshape(epochs),"-")
+        if len(reordered_values.shape) == 2:
+            for i in range(reordered_values.shape[0]):  # Pour chaque éléments
+                epochs = reordered_values.shape[-1]
+                plt.plot(reordered_values[i].reshape(epochs),"-")
+        if len(reordered_values.shape) == 3:
+            for i in range(reordered_values.shape[0]):
+                for j in range(reordered_values.shape[1]):
+                    epochs = reordered_values.shape[-1]
+                    plt.plot(reordered_values[i,j].reshape(epochs),"-")
 
     def input(self,X):
         assert type(X) is int
