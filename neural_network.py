@@ -102,7 +102,7 @@ class NeuralNetwork:
             self.backward(X, y, learning_rate)
             if DEBUG: util.progress_print(i, epochs, int(epochs/10))
         if PLOTTING:
-            self.plot_output(self.list_output,"Output") #FIXME L'affichage des valeurs prends bcp de temps car a chaque itération
+            self.plot_output(self.list_output,"Output")
             self.plot_output(self.list_weights1,"Weigths") #FIXME
             self.plot_output(self.list_weights2,"Weigths2") #FIXME
 #            if DEBUG_ON: print(self.output)
