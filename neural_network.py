@@ -11,11 +11,18 @@ SAVING = True       # Sauvegarde data
 is_saving_data = PLOTTING or SAVING
 
 class NeuralNetwork:
+    """
+    TODO
+        - Pouvoir sauvegarder une partie des données (1/100 par ex.)
+            - il faut une nouvelle fonction avec en argument les variables a sauvegarder
+    """
     def __init__(self, input_size, hidden_size, output_size):
         self.weights1 = np.ones((input_size,hidden_size))  # poids de la couche d'entrée
         self.weights2 = np.ones((hidden_size, output_size))  # poids de la couche cachée
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
+        self.hidden = np.array([])
+        self.output = np.array([])
 
         self.list_weights1 = []
         self.list_weights2 = []
@@ -23,7 +30,6 @@ class NeuralNetwork:
         self.list_bias2 = []
         self.list_hidden = []
         self.list_output = []
-        self.arr_epochs = np.array([])
 
     def function(self, x, fonction_to_use="tanh"):
         """
@@ -95,10 +101,10 @@ class NeuralNetwork:
             self.forward(X)
             self.backward(X, y, learning_rate)
             if DEBUG: util.progress_print(i, epochs, int(epochs/10))
-            if PLOTTING:
-                self.plot_output(i,self.output,"Output") #FIXME L'affichage des valeurs prends bcp de temps car a chaque itération
-                self.plot_output(i,self.weights1,"Weigths") #FIXME
-                self.plot_output(i,self.weights2,"Weigths2") #FIXME
+        if PLOTTING:
+            self.plot_output(self.list_output,"Output")
+            self.plot_output(self.list_weights1,"Weigths") #FIXME
+            self.plot_output(self.list_weights2,"Weigths2") #FIXME
 #            if DEBUG_ON: print(self.output)
         print("Trainig done")
 
@@ -107,17 +113,21 @@ class NeuralNetwork:
         self.forward(X)
         return self.output
 
-    def plot_output(self,epoch,values,fig_name=None):
-        """
-        TODO
-            Modifier la fonction afin de plot les valeurs meme lorsqu'elles sont dans des arrays de dimensions variés
-                - voir weights1, weights2 ...
-        """
+    def plot_output(self,values,fig_name=None):
+        values = np.array(values)
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
-        epoch_arr = epoch*np.ones(np.array(values.shape))
-        plt.plot(epoch_arr,values,"kx")
-
+        # Recupere le shape de values
+        reordered_values = util.reorder_array(values)
+        if len(reordered_values.shape) == 2:
+            for i in range(reordered_values.shape[0]):  # Pour chaque éléments
+                epochs = reordered_values.shape[-1]
+                plt.plot(reordered_values[i].reshape(epochs),"-")
+        if len(reordered_values.shape) == 3:
+            for i in range(reordered_values.shape[0]):
+                for j in range(reordered_values.shape[1]):
+                    epochs = reordered_values.shape[-1]
+                    plt.plot(reordered_values[i,j].reshape(epochs),"-")
 
     def input(self,X):
         assert type(X) is int
