@@ -123,10 +123,8 @@ class NeuralNetwork:
         if fig_name is None:    plt.figure()
         else:                   plt.figure(fig_name)
         # Recupere le shape de values
-        temp_epochs, temp_m, temp_n = values.shape[0], values.shape[1], values.shape[2] #fixme certaines values sont d'ordre 2 et non 3
-        for _m in temp_m:
-            for _n in temp_n:
-                plt.plot(values[:,_m,_n],"-")
+        reordered_values = util.reorder_array(values)
+        plt.plot(reordered_values)
 
     def input(self,X):
         assert type(X) is int
