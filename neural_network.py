@@ -8,7 +8,7 @@ PLOTTING = True    # Trace dans graphique
 SAVING = True       # Sauvegarde data
 
 # Parametres machine
-is_saving_data = PLOTTING or SAVING
+IS_SAVING_DATA = PLOTTING or SAVING
 
 class NeuralNetwork:
     """
@@ -17,10 +17,13 @@ class NeuralNetwork:
             - il faut une nouvelle fonction avec en argument les variables a sauvegarder
     """
     def __init__(self, input_size, hidden_size, output_size):
-        self.weights1 = np.ones((input_size,hidden_size))  # poids de la couche d'entrée
-        self.weights2 = np.ones((hidden_size, output_size))  # poids de la couche cachée
-        self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
-        self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
+        # Poids initiaux
+        self.weights1 = np.random.randn(input_size,hidden_size).T  # .T pour prevenir les erreurs de dim dans np.dot
+        self.weights2 = np.random.randn(hidden_size, output_size).T
+        # Biais
+        self.bias1 = np.zeros((1, hidden_size))
+        self.bias2 = np.zeros((1, output_size))
+
         self.hidden = np.array([])
         self.output = np.array([])
 
@@ -57,7 +60,7 @@ class NeuralNetwork:
         self.output = self.function(np.dot(self.hidden,self.weights2) + self.bias2)  # activation de la couche de sortie
 
         # Sauvegarde des données ?
-        if is_saving_data:
+        if IS_SAVING_DATA:
             self.list_hidden.append(self.hidden.copy())
             self.list_output.append(self.output.copy())
 
@@ -80,7 +83,7 @@ class NeuralNetwork:
         self.bias1 += learning_rate*np.sum(d_hidden, axis=0)
 
         # Sauvegarde des données ?
-        if is_saving_data:
+        if IS_SAVING_DATA:
             self.list_weights1.append(self.weights1.copy())
             self.list_weights2.append(self.weights2.copy())
             self.list_bias1.append(self.bias1.copy())
