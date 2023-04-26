@@ -18,8 +18,8 @@ class NeuralNetwork:
     """
     def __init__(self, input_size, hidden_size, output_size):
         # Poids initiaux
-        self.weights1 = np.random.randn(input_size,hidden_size).T  # .T pour prevenir les erreurs de shape dans np.dot
-        self.weights2 = np.random.randn(hidden_size, output_size).T
+        self.weights1 = np.random.randn(input_size,hidden_size)
+        self.weights2 = np.random.randn(hidden_size, output_size)
         # Biais
         self.bias1 = np.zeros((1, hidden_size))
         self.bias2 = np.zeros((1, output_size))
