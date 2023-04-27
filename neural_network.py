@@ -56,8 +56,8 @@ class NeuralNetwork:
         Returns:
             numpy.ndarray: La sortie du réseau de neurones.
         """
-        self.hidden = self.function(np.dot(X,self.weights1) + self.bias1)  # activation de la couche cachée
-        self.output = self.function(np.dot(self.hidden,self.weights2) + self.bias2)  # activation de la couche de sortie
+        self.hidden = 10*self.function(np.dot(X,self.weights1) + self.bias1)  # activation de la couche cachée
+        self.output = 10*self.function(np.dot(self.hidden,self.weights2) + self.bias2)  # activation de la couche de sortie
 
         # Sauvegarde des données ?
         if IS_SAVING_DATA:

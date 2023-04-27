@@ -12,13 +12,8 @@ Préparez vos données d'entraînement. Dans cet exemple, nous allons utiliser d
 Vous pouvez utiliser vos propres données en les chargeant depuis un fichier ou en les générant de manière programmée. 
 Nous allons également diviser les données en ensembles d'entraînement et de validation :
 """
-Data = np.array([ 0.45375244, -0.87447848,  0.20418979,  0.22612347, -0.82194152,
-        0.76487173, -0.01377334, -0.25665163, -0.72822261, -0.44119749,
-        0.87519806, -0.94695929, -0.53262514, -0.7910783 , -0.01285381,
-        0.32680019,  0.04060011, -0.58239623, -0.52266407, -0.83104156,
-       -0.06727012, -0.80390909,  0.24674281,  0.26055366, -0.1371677 ,
-       -0.88861433,  0.19587372,  0.98332952, -0.21530903,  0.64215399]).reshape(30,1)
-X = Data[:10]
+Data = np.array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14]).reshape(15,1)
+X = Data[2]
 Y = 2*X
 
 """
