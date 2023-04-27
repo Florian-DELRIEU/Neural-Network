@@ -2,7 +2,7 @@ from neural_network import NeuralNetwork
 import numpy as np
 
 input_size = 1 # taille de la couche d'entrée
-hidden_size = 3 # taille de la couche cachée
+hidden_size = 1 # taille de la couche cachée
 output_size = 1 # taille de la couche de sortie
 Network = NeuralNetwork(input_size, hidden_size, output_size)
 
@@ -18,16 +18,16 @@ Data = np.array([ 0.45375244, -0.87447848,  0.20418979,  0.22612347, -0.82194152
         0.32680019,  0.04060011, -0.58239623, -0.52266407, -0.83104156,
        -0.06727012, -0.80390909,  0.24674281,  0.26055366, -0.1371677 ,
        -0.88861433,  0.19587372,  0.98332952, -0.21530903,  0.64215399]).reshape(30,1)
-X = Data[:4]
-y = np.where(X < -0.3, -1, np.where(X > 0.3, 1, 0))
+X = Data[:10]
+Y = 2*X
 
 """
 Entraînez le système neuronal en appelant la méthode train de l'instance de NeuralNetwork :
 """
-learning_rate = 0.1 # taux d'apprentissage
-epochs = 10000 # nombre d'itérations d'entraînement
-Network.train(X, y, learning_rate, epochs)
+learning_rate = 0.001 # taux d'apprentissage
+epochs = 1000 # nombre d'itérations d'entraînement
+Network.train(X, Y, learning_rate, epochs)
 
 
-print(f"Valeurs cibles: \n {y}")
+print(f"Valeurs cibles: \n {Y}")
 print(f"Valeurs obtenues: \n {Network.output}")

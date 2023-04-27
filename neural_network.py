@@ -18,8 +18,8 @@ class NeuralNetwork:
     """
     def __init__(self, input_size, hidden_size, output_size):
         # Poids initiaux
-        self.weights1 = self.set_weight((input_size,hidden_size),-1,1)  # poids de la couche d'entrée
-        self.weights2 = self.set_weight((hidden_size,output_size),-1,1)  # poids de la couche caché
+        self.weights1 = np.ones((input_size,hidden_size))  # poids de la couche d'entrée
+        self.weights2 = np.ones((hidden_size,output_size))  # poids de la couche caché
         # Constantes
         self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
         self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
