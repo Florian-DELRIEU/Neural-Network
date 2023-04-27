@@ -105,9 +105,12 @@ class NeuralNetwork:
             self.backward(X, y, learning_rate)
             if DEBUG: util.progress_print(i, epochs, int(epochs/10))
         if PLOTTING:
-            self.plot_output(self.list_output,"Output")
-            self.plot_output(self.list_weights1,"Weigths") #FIXME
-            self.plot_output(self.list_weights2,"Weigths2") #FIXME
+            self.plot_output(self.list_weights1,"Weigths1")
+            self.plot_output(self.list_bias1,"Biais1")
+            self.plot_output(self.list_hidden,"Hidden")
+            self.plot_output(self.list_weights2,"Weigths2")
+            self.plot_output(self.list_bias2,"Biais2")
+            self.plot_output(self.list_output, "Output")
 #            if DEBUG_ON: print(self.output)
         print("Trainig done")
 
