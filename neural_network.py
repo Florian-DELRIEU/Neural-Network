@@ -10,6 +10,8 @@ SAVING = True       # Sauvegarde data
 # Parametres machine
 IS_SAVING_DATA = PLOTTING or SAVING
 
+ACTIVATION_FUNCTION = "tanh"
+
 class NeuralNetwork:
     """
     TODO
@@ -34,7 +36,7 @@ class NeuralNetwork:
         self.list_hidden = []
         self.list_output = []
 
-    def function(self, x, fonction_to_use="tanh"):
+    def function(self, x, fonction_to_use= ACTIVATION_FUNCTION):
         """
         Calcule la fonction d'activation sigmoid sur une entrée x.
             - x (numpy.ndarray): Un scalaire, un vecteur ou une matrice d'entrée.
@@ -73,8 +75,13 @@ class NeuralNetwork:
             learning_rate (float): Le taux d'apprentissage du réseau de neurones.
         """
         # rétropropagation du gradient
-        d_output = (y - self.output)*self.output*(1 - self.output)
-        d_hidden = np.dot(d_output, self.weights2.T)*self.hidden*(1 - self.hidden)
+        if ACTIVATION_FUNCTION == "sigmoid":
+            d_output = (y - self.output)*self.output*(1 - self.output)
+            d_hidden = np.dot(d_output, self.weights2.T)*self.hidden*(1 - self.hidden)
+        elif ACTIVATION_FUNCTION == "tanh":
+            d_output = (y - self.output) * (1 - self.output ** 2)
+            d_hidden = np.dot(d_output, self.weights2.T) * (1 - self.hidden**2)
+
 
         # mise à jour des poids et des biais
         self.weights2 += learning_rate*np.dot(self.hidden.T,d_output)
