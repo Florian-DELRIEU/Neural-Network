@@ -18,12 +18,12 @@ class NeuralNetwork:
     """
     def __init__(self, input_size, hidden_size, output_size):
         # Poids initiaux
-        self.weights1 = np.random.randn(input_size,hidden_size)
-        self.weights2 = np.random.randn(hidden_size, output_size)
-        # Biais
-        self.bias1 = np.zeros((1, hidden_size))
-        self.bias2 = np.zeros((1, output_size))
-
+        self.weights1 = self.set_weight((input_size,hidden_size),-1,1)  # poids de la couche d'entrée
+        self.weights2 = self.set_weight((hidden_size,output_size),-1,1)  # poids de la couche caché
+        # Constantes
+        self.bias1 = np.zeros((1, hidden_size))  # biais de la couche d'entrée (constantes)
+        self.bias2 = np.zeros((1, output_size))  # biais de la couche cachée
+        # Sorties des couches
         self.hidden = np.array([])
         self.output = np.array([])
 
@@ -136,3 +136,13 @@ class NeuralNetwork:
         assert type(X) is int
         np.array([X])
         self.predict(X)
+
+    def set_weight(self, shape, a, b):
+        """
+        This function returns a numpy array of the given shape with equidistant values between a and b.
+        """
+        size = np.prod(shape)
+        delta = (b - a) / (size - 1)
+        values = np.arange(size) * delta + a
+        return np.reshape(values, shape)
+
